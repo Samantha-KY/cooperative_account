@@ -1,0 +1,116 @@
+GET HTTP://localhost:2000/members
+
+### create a member
+
+POST HTTP://localhost:2000/members/register
+Content-Type: application/json
+
+{
+    "first_name":"Sabrina",
+    "last_name":"Murera Isimbi",
+    "email": "isabrina@gmail.com",
+    "phone":"0788661836",
+    "family_member":3,
+    "age":24,
+    "gender":"female",
+    "marital_status":"married",
+    "children_number":1,
+    "child_age":1,
+    "child_names":"Banamwana Isaro Or Carrington",
+    "password": "carrington",
+    "password2": "carrington"
+}
+
+### get member by id
+GET HTTP://localhost:2000/members/4
+
+### update member by id
+POST HTTP://localhost:2000/members/edit/11
+Content-Type: application/json
+
+{
+    "first_name":"Olivier",
+    "last_name":"Ndwaniye",
+    "email": "nolivier@gmail.com",
+    "phone":"+250788429969",
+    "family_member":0,
+    "age":31,
+    "gender":"male",
+    "marital_status":"single",
+    "children_number":0,
+    "child_age":0,
+    "child_names":"null",
+    "role_name": "committee",
+    "password": "olivier123",
+    "password2": "olivier123"
+}
+### update member role
+PATCH HTTP://localhost:2000/members/3
+Content-Type: application/json
+
+{
+    "role_name": "committee"
+}
+### delete member
+DELETE HTTP://localhost:2000/members/8
+
+###
+GET HTTP://localhost:2000/accounts
+
+###
+POST HTTP://localhost:2000/accounts/create
+Content-Type: application/json
+
+{
+    "acc_no": "CS0001",
+    "acc_type": "Saving",
+    "amount": 5000
+}
+
+###
+PATCH HTTP://localhost:2000/accounts/2
+Content-Type: application/json
+
+{
+    "acc_no": "CS0002",
+    "acc_type": "normal",
+    "amount": 10000
+}
+
+###
+DELETE HTTP://localhost:2000/accounts/4
+
+###
+GET HTTP://localhost:2000/members/login
+Content-Type: application/json
+
+{
+    "email": "mureraksamantha@gmail.com",
+    "password": "sam2000"
+}
+
+###
+POST HTTP://localhost:2000/members/login
+Content-Type: application/json
+
+{
+    
+    "email": "mureraksamantha@gmail.com",
+    "password": "sam2000"
+
+}
+###
+GET HTTP://localhost:2000/accounts/transactions
+
+### post
+POST HTTP://localhost:2000/accounts/2/transactions
+Content-Type: application/json
+
+{
+    
+    "acc_id":1,
+    "member_id": 10,
+    "t_type":"deposit",
+    "t_amount":10000
+
+}

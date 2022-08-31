@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/1.2/skeleton.css"/>
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<style>
+body {
+	color: #fff;
+	background: #63738a;
+	font-family: 'Roboto', sans-serif;
+    background-image: url("https://images.unsplash.com/photo-1529313780224-1a12b68bed16?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb");
+    background-repeat: no-repeat;
+}
+.login-form {
+    width: 400px;
+    margin: 80px auto;
+  	font-size: 15px;
+}
+.login-form form {
+    margin-bottom: 15px;
+    /* background: #f7f7f7; */
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 15px;
+    font-weight: bold;
+}
+.p {
+color: #0d840d;
+} 
+h1{
+    color: black;
+}
+</style>
+</head>
+<body>
+    <div class="login-form">
+        <h1 >LOGIN</h1>
+
+    <ul>
+        <% if(messages.success_msg) { %>
+        <li><%= messages.success_msg %></li>
+        <% } %>
+    </ul>
+    <ul>
+        <% if(messages.error) {%>
+            <li><%= messages.error %></li>
+        <% } %>
+    </ul>
+    <form action="/members/login" method="POST" >
+        <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="Email" class="btn-lg" required/>
+        </div>
+        <div class="form-group">
+            <input type="password" id="password" name="password" placeholder="Password" class="btn-lg" required/>
+        </div>
+        <div>
+            <input class="btn btn-success btn-lg btn-block" type="submit"  value="Login"/>
+        </div>
+        <p class="text-center">
+        <a class="p" href="/members/register">Register</a>
+    </p>
+    </form>
+</div>
+</body>
+</html>
