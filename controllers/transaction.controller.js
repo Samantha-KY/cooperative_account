@@ -116,7 +116,7 @@ const getPersonalTransaction = async (req, res) => {
      console.log(account, "account number");
      const personalTransactions = await pool.query("SELECT * FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
      if (personalTransactions.rowCount === 0) {
-        return res.json({status: 400, message: 'transaction does not exist'});
+        return res.json({ message: 'no transaction have been made'});
     } 
     console.log(personalTransactions, "personalTransaction....");
     res.render('committeeTransaction', {data: personalTransactions.rows });
