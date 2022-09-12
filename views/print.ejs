@@ -35,7 +35,7 @@
 <div class="mt-0 mb-5 ml-5">
 <h2 class="font-semibold space-y-0">mureraksamantha@gmail.com</h2>
     <h2 class=" font-semibold space-y-0">KK 439 st</h2>
-    <h3>Done at: {{now}}</h3>
+    <h2>Done at <span id='date-time'></span>.</h2>
 
 </div>
     <div class="ml-5">
@@ -93,6 +93,8 @@ function myFunction() {
 function mow(){
     return new Date().toLocaleDateString();
 }
+var dt = new Date().toLocaleDateString();
+document.getElementById('date-time').innerHTML=dt;
     </script>
 </body>
 </html>
