@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-200">
+    <div class="grid grid-cols-2 ml-5">
+    <div class="mb-5 flex flex-rows-2 mt-3">
+    <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb" alt="agriculture"
+    style="height: 80px;" class="rounded-full"
+    />
+    <div class="grid grid-cols">
+    <h1 class="text-2xl font-semibold space-y-0">AgriCoop</h1>
+    <h1 class="text-2xl font-semibold space-y-0">Kigali, Rwanda</h1>
+</div>
+</div>
+<div class="mt-3">
+    <h1 class="text-3xl font-semibold">Your Account Statement </h1>
+</div>
+</div>
+<div class="mt-0 mb-5 ml-5">
+<h2 class="font-semibold space-y-0">mureraksamantha@gmail.com</h2>
+    <h2 class=" font-semibold space-y-0">KK 439 st</h2>
+    <h3>Done at: {{now}}</h3>
+
+</div>
+    <div class="ml-5">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for account number.." title="Type in account number">
+      <table class="table-fixed border-spacing-4" id="tbl_exporttable_to_xls">
+        <thead class="bg-green-500">
+        <tr class="text-2l space-y-5">
+          <th>Account number</th>
+          <th>Transaction type</th>
+          <th>Transaction amount</th>
+          <th>Descriptions</th>
+          <th>Transaction Date</th>
+        </tr>
+    </thead>
+    <tbody class="">
+        <% if(data != null) { %>
+        <% data.forEach(function(data, index) { %> 
+        <tr>
+          <td><%- data.acc_no %></td>
+          <td><%- data.t_type %></td>
+          <td><%- data.t_amount %></td>
+          <td><%- data.description %></td>
+          <td><%- data.updated_at %></td>
+        </tr>
+    <% }) %>
+    <% } %>
+    </tbody>
+      </table>
+      <button class="h-10 px-6 font-semibold rounded-md bg-green-500 text-black" onclick="printFunction()">Print</button>
+    </div> 
+    <script>
+
+function printFunction() { 
+        window.print(); 
+}
+
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tbl_exporttable_to_xls");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+function mow(){
+    return new Date().toLocaleDateString();
+}
+    </script>
+</body>
+</html>

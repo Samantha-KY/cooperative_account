@@ -1,4 +1,4 @@
-const client = require('twilio')("AC8c17e6648f4f93bfbacee4b086c21841", "772ef1e853cfb61b76de195de32d81e9");
+const client = require('twilio')("AC8c17e6648f4f93bfbacee4b086c21841", "0e5f194e2217466a04f52f987c236e87");
 const pool = require('../dbConfig');
 
 const  getAllTransactions = async (req, res, next) => {
@@ -42,10 +42,10 @@ const makeNewTransaction = async (req, res) => {
                         }
                         
                         if(t_type === 'deposit'){
-                            pool.query('UPDATE accounts SET  amount = amount + t_amount FROM transactions WHERE accounts.acc_no = transactions.acc_no');
+                            pool.query(`UPDATE accounts SET  amount = amount + ${t_amount} FROM transactions WHERE accounts.acc_no = transactions.acc_no`);
                             
                         } else {
-                            pool.query('UPDATE accounts SET  amount = amount - t_amount FROM transactions WHERE accounts.acc_no = transactions.acc_no');
+                            pool.query(`UPDATE accounts SET  amount = amount - ${t_amount} FROM transactions WHERE accounts.acc_no = transactions.acc_no`);
                             
                         }
                         sendTextMessage();
@@ -121,11 +121,16 @@ const getPersonalTransaction = async (req, res) => {
     console.log(personalTransactions, "personalTransaction....");
     res.render('committeeTransaction', {data: personalTransactions.rows });
 }
+const  printTransactions = async (req, res, next) => {
+    const printTransactions = await pool.query("SELECT * FROM transactions");
+res.render('print', {data: printTransactions.rows });
+};
 
     module.exports = {
         getAllTransactions,
         makeNewTransaction,
         findTransactionByAccNo,
         deleteTransaction,
-        getPersonalTransaction
+        getPersonalTransaction,
+        printTransactions
     }
