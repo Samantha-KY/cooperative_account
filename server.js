@@ -7,7 +7,7 @@ const passport = require('passport');
 const {getAllMembers, createNewMember, updateMember, deleteMember,findMemberById, updateMemberRoleById,
     findMemberAccountById, findMemberAccountTransactionsById, getAllMembersCommittee, findCommitteeById, getmemberTransaction} = require('./controllers/member.controller');
     const{getAllAccounts, updateAccount, deleteAccount, findAccountById, createNewAccount, getAllAccountsCommittee, savingAccounts}= require('./controllers/account.controller');
-const {makeNewTransaction, getAllTransactions, findTransactionByAccNo, getPersonalTransaction, printAllTransactions, printTransactions} = require('./controllers/transaction.controller');
+const {makeNewTransaction, getAllTransactions, findTransactionByAccNo, getPersonalTransaction, printAllTransactions, printTransactions, getTotalAmount} = require('./controllers/transaction.controller');
 const initializePassport = require('./passportConfig');
 
 
@@ -128,6 +128,8 @@ app.get('/members/account/(:id)', findMemberAccountById, (req,res)=>{
 app.get('/transaction/member/(:id)', getmemberTransaction,(req, res) =>{
     res.render('memberTransactionDetails', {id: req.user.member_id})
 });
+
+app.get('/account/amount', getTotalAmount);
 
 // app.get('/members/transaction/(:id)', getAllTransactionsMember, (req,res)=>{
 //     res.render('memberTransactionDetails', {query: req.user.acc_number} );

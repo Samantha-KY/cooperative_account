@@ -74,10 +74,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </nav>
     <div class="w3-main" style="margin-left:300px;margin-top:43px;">
       <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by transaction type.." title="Type in transaction type">
+      <button type="button" class="btn"><a  href="/makeTransaction">New transaction</a></button>
+      <!-- <button type="button" class="btn"> <a href="/accounts/printTransaction">Print Report</a></button> -->
       <table class="customers" id="tbl_exporttable_to_xls">
         <thead>
           <tr>
-            <th>Transaction type</th>
+            <th>DEBIT</th>
+          <th>CREDIT</th>
             <th>Account number</th>
             <th>Transaction amount</th>
             <th>Description</th>
@@ -89,20 +92,29 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <% if(data != null) { %>
           <% data.forEach(function(data, index) { %> 
           <tr>
-            <td><%- data.t_type %></td>
+            <td><% if (data.t_type == "deposit"){ %>
+              <%- data.t_type %>
+           <% } %></td>
+           <td><% if (data.t_type == "withdraw"){ %>
+            <%- data.t_type %>
+         <% } %></td>
             <td><%- data.acc_no %></td>
             <td><%- data.t_amount %></td>
             <td><%- data.description %></td>
-            
           </tr>
     <% }) %>
     <% } %>
     </tbody>
       </table>
-      <button type="button" class="btn"><a  href="/makeTransaction">New transaction</a></button>
+      <h1 style="font-family: 'Times New Roman', Times, serif;">Total Balance : <%= query %></h1>
+      
       <!-- <button onclick="ExportToExcel('xlsx')">Export table to excel</button> -->
     </div> 
     <script>
+
+function printFunction() { 
+        window.print(); 
+      }
         // Get the Sidebar
         var mySidebar = document.getElementById("mySidebar");
         
