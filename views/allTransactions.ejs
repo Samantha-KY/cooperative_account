@@ -86,6 +86,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <th>CREDIT</th>
           <th>Transaction amount</th>
           <th>Descriptions</th>
+          <th>Expenses</th>
           <th>Transaction Date</th>
           <!-- <th>Age</th> -->
           <!-- <th>Role Name</th> -->
@@ -106,6 +107,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
        <% } %></td>
           <td><%- data.t_amount %></td>
           <td><%- data.description %></td>
+          <td><% if (data.t_type == "withdraw"){ %>
+            <%- data.description %>
+         <% } %></td>
           <td><%- data.updated_at %></td>
           <!--<td><%- data.age %></td>
           <td><%- data.role_name %></td> -->
@@ -128,10 +132,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <% } %>
     </tbody>
       </table>
-      <div style="display: flex; flex-direction: row; gap: 1rem;">
+      <div style="display: flex; flex-direction: row; gap: 1rem; border: 1px solid green; ">
       <h4 style="font-family: 'Times New Roman', Times, serif;">Total deposited : <%= dep %></h4>
       <h4 style="font-family: 'Times New Roman', Times, serif;">Total Withdrawn : <%= dr %></h4>
-      <h4 style="font-family: 'Times New Roman', Times, serif;">Total Balances : <%= tt %></h4>
+      <h4 style="font-family: 'Times New Roman', Times, serif;">Total Balance : <%= tt %></h4>
     </div>
       
     </div> 

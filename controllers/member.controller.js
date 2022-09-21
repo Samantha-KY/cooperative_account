@@ -26,7 +26,8 @@ const createNewMember = async (req, res)=> {
     const{first_name, last_name, phone, family_member, age, gender, 
         marital_status, 
         children_number,  
-        email, 
+        email,
+        role_name, 
         password, 
         password2} = req.body;
 
@@ -290,6 +291,20 @@ const updateMemberRoleById = async (req, res) => {
         // return res.json({status: 200, message: 'member updated'});
         res.redirect('/members');
 };
+const updateMemberpasswordById = async (req, res) => {
+    const {id} = req.params;
+    const {password, email} = req.body;
+// try {
+    const memberUpdateRole = await pool.query('UPDATE members SET  email = $1, password = $2 WHERE member_id = $2', [email, password, id]); 
+
+    if (memberUpdateRole.rowCount === 0) {
+
+        return res.json({status: 400, message: 'member does not exist'});
+
+    } 
+        // return res.json({status: 200, message: 'member updated'});
+        res.redirect('/members');
+};
 
 const deleteMember = async (req, res, next) => {
     try {
@@ -361,13 +376,15 @@ const getmemberTransaction = async (req, res) => {
     console.log(account, "account number");
     const personalTransactions = await pool.query("SELECT * FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
     const date = await pool.query("SELECT transactions.updated_at FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
+    const deposit = await pool.query("SELECT SUM(t_amount) AS deposit FROM transactions WHERE acc_no = $1", [account]);
+    const withdraw = await pool.query("SELECT SUM(t_amount) AS withdraw FROM transactions WHERE acc_no = $1", [account]);
     // console.log(personalTransactions, "all personal transaction");
     console.log(date.rows, "dates");
     if (personalTransactions.rowCount === 0) {
        return res.json({status: 400, message: 'transaction does not exist'});
    } 
 //    console.log(personalTransactions, "personalTransaction....");
-   res.render('memberTransactionDetails', {data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows[0].updated_at});
+   res.render('memberTransactionDetails', {data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows[0].updated_at,dep: deposit.rows[0].deposit, dr: withdraw.rows[0].withdraw });
 };
 
 module.exports = {

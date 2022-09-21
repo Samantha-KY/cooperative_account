@@ -1,4 +1,4 @@
-const client = require('twilio')("AC8c17e6648f4f93bfbacee4b086c21841", "88dbec0a42fec5b1ba4314ea07b5bef3");
+const client = require('twilio')("AC8c17e6648f4f93bfbacee4b086c21841", "31b0d0c432c099378201f400b8106fcf");
 const pool = require('../dbConfig');
 
 const getAllTransactions = async (req, res, next) => {
@@ -124,12 +124,14 @@ const getPersonalTransaction = async (req, res) => {
     const account = acc.rows[0].acc_no;
     console.log(account, "account number");
     const personalTransactions = await pool.query("SELECT * FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
+    const deposit = await pool.query("SELECT SUM(t_amount) AS deposit FROM transactions WHERE acc_no = $1", [account]);
+    const withdraw = await pool.query("SELECT SUM(t_amount) AS withdraw FROM transactions WHERE acc_no = $1", [account]);
     if (personalTransactions.rowCount === 0) {
         return res.json({ message: 'no transaction have been made' });
     }
     console.log(personalTransactions, "personalTransaction....");
     const date = await pool.query("SELECT t.updated_at FROM transactions t INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
-    res.render('committeeTransaction', { data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows});
+    res.render('committeeTransaction', { data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows, dep: deposit.rows[0].deposit, dr: withdraw.rows[0].withdraw});
 };
 
 const printTransactions = async (req, res, next) => {

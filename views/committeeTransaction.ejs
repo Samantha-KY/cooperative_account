@@ -84,7 +84,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             <th>Account number</th>
             <th>Transaction amount</th>
             <th>Description</th>
-            
+            <th>Expenses</th>
           </tr>
       </thead>
       <tbody>
@@ -101,12 +101,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             <td><%- data.acc_no %></td>
             <td><%- data.t_amount %></td>
             <td><%- data.description %></td>
+            <td><% if (data.t_type == "withdraw"){ %>
+              <%- data.description %>
+           <% } %></td>
           </tr>
     <% }) %>
     <% } %>
     </tbody>
       </table>
-      <h1 style="font-family: 'Times New Roman', Times, serif;">Total Balance : <%= query %></h1>
+      <h1 style="font-family: 'Times New Roman', Times, serif; border: 1px solid green;">Total Balance : <%= query %></h1>
       
       <!-- <button onclick="ExportToExcel('xlsx')">Export table to excel</button> -->
     </div> 
