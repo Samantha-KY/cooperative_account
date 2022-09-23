@@ -1,4 +1,4 @@
-const client = require('twilio')("AC8c17e6648f4f93bfbacee4b086c21841", "31b0d0c432c099378201f400b8106fcf");
+const client = require('twilio')("AC8c17e6648f4f93bfbacee4b086c21841", "7bdd674f836f61039f8244ad18efd1f5");
 const pool = require('../dbConfig');
 const bcrypt = require('bcrypt');
 

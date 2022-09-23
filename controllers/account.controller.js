@@ -122,7 +122,7 @@ const deleteAccount= async (req, res, next) => {
 const getNumberOfSavingAccounts = async () =>{
     const save = "Saving";
     const saving = await pool.query('SELECT COUNT(acc_type) FROM accounts WHERE acc_type = $1', [save]);
-    console.log(saving.rows[0].count);
+    // console.log(saving.rows[0].count);
     return saving.rows[0].count;
     // res.render('dashboard', {save: saving.rows});
     // const totalAccounts = await pool.query("SELECT COUNT(*) FROM accounts");
