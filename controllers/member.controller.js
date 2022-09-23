@@ -228,7 +228,7 @@ const getmemberTransaction = async (req, res) => {
     const { id } = req.params;
     const acc = await pool.query("SELECT acc_no FROM accounts INNER JOIN members USING (member_id) WHERE member_id = $1", [id]);
     const account = acc.rows[0].acc_no;
-    console.log(account, "account number");
+    // console.log(account, "account number");
     const personalTransactions = await pool.query("SELECT * FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
     const date = await pool.query("SELECT transactions.updated_at FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
     const deposit = await pool.query("SELECT SUM(t_amount) AS deposit FROM transactions WHERE acc_no = $1", [account]);
@@ -239,7 +239,7 @@ const getmemberTransaction = async (req, res) => {
         return res.json({ status: 400, message: 'transaction does not exist' });
     }
     //    console.log(personalTransactions, "personalTransaction....");
-    res.render('memberTransactionDetails', { data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows[0].updated_at, dep: deposit.rows[0].deposit, dr: withdraw.rows[0].withdraw });
+    res.render('memberTransactionDetails', { data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows, dep: deposit.rows[0].deposit, dr: withdraw.rows[0].withdraw });
 };
 const getTotalMembers = async (req, res) => {
     const totalMember = await pool.query('SELECT COUNT(*) FROM members');

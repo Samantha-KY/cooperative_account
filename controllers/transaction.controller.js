@@ -119,14 +119,14 @@ const getPersonalTransaction = async (req, res) => {
     const { id } = req.params;
     const acc = await pool.query("SELECT acc_no FROM accounts INNER JOIN members USING (member_id) WHERE member_id = $1", [id]);
     const account = acc.rows[0].acc_no;
-    console.log(account, "account number");
+    // console.log(account, "account number");
     const personalTransactions = await pool.query("SELECT * FROM transactions INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
     const deposit = await pool.query("SELECT SUM(t_amount) AS deposit FROM transactions WHERE acc_no = $1", [account]);
     const withdraw = await pool.query("SELECT SUM(t_amount) AS withdraw FROM transactions WHERE acc_no = $1", [account]);
     if (personalTransactions.rowCount === 0) {
         return res.json({ message: 'no transaction have been made' });
     }
-    console.log(personalTransactions, "personalTransaction....");
+    // console.log(personalTransactions, "personalTransaction....");
     const date = await pool.query("SELECT t.updated_at FROM transactions t INNER JOIN accounts USING (acc_no) WHERE acc_no = $1", [account]);
     res.render('committeeTransaction', { data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows, dep: deposit.rows[0].deposit, dr: withdraw.rows[0].withdraw});
 };

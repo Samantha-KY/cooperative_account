@@ -68,9 +68,9 @@ h1{
             <input type="email" id="email" name="email" placeholder="Email" class="btn-lg" required/>
         </div>
         <div class="form-group">
-            <!-- <input type="password" id="password" name="password" placeholder="Password" class="btn-lg" id="myInput" required/>
-            <input type="checkbox" onclick="myFunction()"> -->
-     <input type="password" placeholder="Password" class="btn-lg" id="myInput"><br><br>
+            <input type="password" id="password" name="password" placeholder="Password" class="btn-lg" required/><br><br>
+            <!-- <input type="checkbox" onclick="myFunction()"> -->
+     <!-- <input type="password" placeholder="Password" class="btn-lg" id="myInput"><br><br> -->
 <input type="checkbox" onclick="myFunction()">Show Password
         </div>
         <div>
@@ -80,7 +80,7 @@ h1{
 </div>
 <script>
     function myFunction() {
-      var x = document.getElementById("myInput");
+      var x = document.getElementById("password");
       if (x.type === "password") {
         x.type = "text";
       } else {
