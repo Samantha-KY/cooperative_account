@@ -109,9 +109,6 @@ const deleteTransaction = async (req, res, next) => {
             return res.json({ status: 400, message: 'transaction does not exist' });
         }
         res.redirect('/accounts');
-
-
-
     } catch (error) {
         console.log(`account does not exist: ${error}`)
         return res.json({ status: error.statusCode, message: error.message });
@@ -134,11 +131,14 @@ const getPersonalTransaction = async (req, res) => {
     res.render('committeeTransaction', { data: personalTransactions.rows, query: personalTransactions.rows[0].amount, dt: date.rows, dep: deposit.rows[0].deposit, dr: withdraw.rows[0].withdraw});
 };
 
-const printTransactions = async (req, res, next) => {
-    const printTransactions = await pool.query("SELECT * FROM transactions");
-    res.render('print', { data: printTransactions.rows });
-};
-
+// const printTransactions = async (req, res, next) => {
+//     const printTransactions = await pool.query("SELECT * FROM transactions");
+//     res.render('print', { data: printTransactions.rows });
+// };
+const getTotalTransaction = async (req, res) => {
+    const totalTransactions = await pool.query('SELECT COUNT(*) FROM transactions');
+    return totalTransactions.rows[0].count;
+}
 
 module.exports = {
     getAllTransactions,
@@ -146,6 +146,7 @@ module.exports = {
     findTransactionByAccNo,
     deleteTransaction,
     getPersonalTransaction,
-    printTransactions,
-    getTotalAmount
+    // printTransactions,
+    getTotalAmount,
+    getTotalTransaction
 }

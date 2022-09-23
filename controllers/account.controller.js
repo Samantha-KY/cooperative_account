@@ -119,10 +119,18 @@ const deleteAccount= async (req, res, next) => {
     }
 }
 
-const savingAccounts = async (req, res) =>{
+const getNumberOfSavingAccounts = async () =>{
     const save = "Saving";
-    const saving = await pool.query('SELECT COUNT(acc_type) FROM accounts WHERE acc_type = $1 ',[save]);
-    res.render('dashboard', {data: saving.rows });
+    const saving = await pool.query('SELECT COUNT(acc_type) FROM accounts WHERE acc_type = $1', [save]);
+    console.log(saving.rows[0].count);
+    return saving.rows[0].count;
+    // res.render('dashboard', {save: saving.rows});
+    // const totalAccounts = await pool.query("SELECT COUNT(*) FROM accounts");
+    // res.render('dashboard', {query: totalAccounts.rows[0].count});
+}
+const getTotalNumberOfAccounts = async () =>{
+    const total = await pool.query('SELECT COUNT(*) FROM accounts');
+    return total.rows[0].count;
 }
 
 module.exports = {
@@ -132,5 +140,6 @@ module.exports = {
     deleteAccount,
     findAccountById,
     getAllAccountsCommittee,
-    savingAccounts
+    getNumberOfSavingAccounts,
+    getTotalNumberOfAccounts
 }

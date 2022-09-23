@@ -5,9 +5,9 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const {getAllMembers, createNewMember, updateMember, deleteMember,findMemberById, updateMemberRoleById,
-    findMemberAccountById, findMemberAccountTransactionsById, getAllMembersCommittee, findCommitteeById, getmemberTransaction} = require('./controllers/member.controller');
-    const{getAllAccounts, updateAccount, deleteAccount, findAccountById, createNewAccount, getAllAccountsCommittee, savingAccounts}= require('./controllers/account.controller');
-const {makeNewTransaction, getAllTransactions, findTransactionByAccNo, getPersonalTransaction, printAllTransactions, printTransactions, getTotalAmount} = require('./controllers/transaction.controller');
+    findMemberAccountById, findMemberAccountTransactionsById, getAllMembersCommittee, findCommitteeById, getmemberTransaction, getTotalMembers} = require('./controllers/member.controller');
+    const{getAllAccounts, updateAccount, deleteAccount, findAccountById, createNewAccount, getAllAccountsCommittee, savingAccounts, totalAccounts, getNumberOfSavingAccounts, getTotalNumberOfAccounts}= require('./controllers/account.controller');
+const {makeNewTransaction, getAllTransactions, findTransactionByAccNo, getPersonalTransaction, printAllTransactions, printTransactions, getTotalAmount, getTotalTransaction} = require('./controllers/transaction.controller');
 const initializePassport = require('./passportConfig');
 
 
@@ -56,13 +56,21 @@ app.get('/members/register', (req,res)=>{
     res.render('register');
 });
 
-app.get('/members/dashboard', checkNoAuthenticated, (req, res) => {
+app.get('/members/dashboard', checkNoAuthenticated, async(req, res) => {
     if(req.user.role_name === 'admin'){
-        res.render("dashboard", {user: req.user.first_name, data: req.user.member_id});
+        const save = await getNumberOfSavingAccounts();
+        const total = await getTotalNumberOfAccounts();
+        const totalMembers = await getTotalMembers();
+        const totalTransaction = await getTotalTransaction();
+        res.render("dashboard", {user: req.user.first_name, data: req.user.member_id, save, total, totalMembers, totalTransaction});
     } else if(req.user.role_name === 'member'){
         res.render("memberDashboard", {user: req.user.first_name, data: req.user.member_id});
     }else  if(req.user.role_name === 'committee'){
-        res.render("commiteeDashboard", {user: req.user.first_name, data: req.user.member_id});
+        const total = await getTotalNumberOfAccounts();
+        const save = await getNumberOfSavingAccounts();
+        const totalMembers = await getTotalMembers();
+        const totalTransaction = await getTotalTransaction();
+        res.render("commiteeDashboard", {user: req.user.first_name, data: req.user.member_id, save, total, totalMembers, totalTransaction});
     }else{
         res.render("index", {user: req.user.first_name});
     }    
@@ -141,7 +149,7 @@ app.get('/accounts/register', (req,res)=>{
 
 app.get('/accounts', getAllAccounts);
 
-app.get('/savingAccount', savingAccounts);
+// app.get('/savingAccount', savingAccounts);
 
 app.get('/accounts/committee', getAllAccountsCommittee);
 // app.get('/accounts/(:id)',(req, res)=> {
@@ -161,7 +169,7 @@ app.get('/makeTransaction',(req, res)=> {
 });
 
 app.get('/accounts/allTransactions', getAllTransactions);
-app.get('/accounts/printTransaction', printTransactions);
+// app.get('/accounts/printTransaction', printTransactions);
 
 app.get('/transaction/personal/(:id)', getPersonalTransaction,(req, res) =>{
     res.render('committeeTransaction', {id: req.user.member_id})
